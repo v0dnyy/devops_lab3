@@ -26,4 +26,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/test:${{ github.event.release.tag_name }} , ${{ secrets.DOCKER_USERNAME }}/lab2:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/lab2:${{ github.event.release.tag_name }} , ${{ secrets.DOCKER_USERNAME }}/lab2:latest
