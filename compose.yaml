@@ -1,0 +1,31 @@
+name: webapp
+services:
+  db:
+    image: postgres:latest
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123
+      - PGUSER=postgres
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready", "-d", "postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "5432:5432"
+    volumes:
+      - /var/lib/postgresql/data
+    container_name: db
+  app:
+    image: danlla/test
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    environment:
+    - "ConnectionStrings:Database=Host=db;User Id=postgres;Password=123;Database=postgres;Port=5432;Pooling=false"
+    container_name: app
